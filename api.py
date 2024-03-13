@@ -31,6 +31,7 @@ class MyAPI:
 
         for i, row in enumerate(data):
             df.iloc[0, i+2] = row
+            df.iloc[0, i+2] = row
 
 
         df = df.astype(str)
@@ -44,7 +45,7 @@ class MyAPI:
         df.to_csv("./result.csv", mode='a',encoding="gbk", index=False, header=not os.path.exists("./result.csv"))
 
     @staticmethod
-    def get_data(data: str) -> any:
+    def get_data(data: list[str]) -> any:
         res = []
         for row in data:
             new_data = row.split(",")
