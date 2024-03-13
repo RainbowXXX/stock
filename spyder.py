@@ -52,7 +52,7 @@ class Spyder:
         
         return True, ret_data
 
-def do_spyder(stock_id: str, name: str) -> bool:
+def do_spyder(idx: int, stock_id: str, name: str) -> bool:
     if stock_id in globalStates['processed_list']:
         return True
     
@@ -70,7 +70,7 @@ def do_spyder(stock_id: str, name: str) -> bool:
             status, data = spyder.GetInfo(response=response, name=name)
 
             if status:
-                MyAPI.get_data(data)
+                MyAPI.get_data(data, idx)
                 globalStates['processed_list'].append(stock_id)
 
                 return True
