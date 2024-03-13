@@ -20,7 +20,7 @@ class MyAPI:
 
         df[['code', 'name']] = pd.DataFrame(l_name)
         
-        tem = data[0]
+        # tem = data[0]
 
         for i, row in enumerate(data):
             df.iloc[0, i+2] = row
@@ -28,16 +28,14 @@ class MyAPI:
 
         df = df.astype(str)
         df.replace('nan', '', inplace=True)
-
-        tem = data[0]
-        if tem in df.iloc[0:, 1].values:
-            cur_time = df.columns[df.iloc[1:, 2] == tem].tolist()
-            print(cur_time)
+        # if tem in df.iloc[0:, 1].values:
+        #     cur_time = df.columns[df.iloc[1:, 2] == tem].tolist()
+        #     print(cur_time)
 
         df.to_csv("./result.csv", mode='a',encoding="gbk", index=False, header=not os.path.exists("./result.csv"))
 
     @staticmethod
-    def get_data(data: list[str], index: int) -> any:
+    def get_data(data: list[str], index: int, stock: str) -> any:
         res = []
         start_date = datetime.strptime('2019-1-1', '%Y-%m-%d')
         end_date = datetime.strptime('2019-12-31', '%Y-%m-%d')
@@ -49,7 +47,7 @@ class MyAPI:
             # cur_time = 
                 fall = new_data[2]
                 res.append(fall)
-        MyAPI.mana_csv(res)
+        MyAPI.mana_csv(res, index, stock)
 
     @staticmethod
     def read_excel(file_name: str) -> list:
