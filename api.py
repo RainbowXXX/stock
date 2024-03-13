@@ -19,17 +19,28 @@ class MyAPI:
 
     @staticmethod
     def mana_csv(data: list) -> any:
+        data.append("0.82")
         l_name = MyAPI.read_excel('./data.xlsx')
         dates = pd.date_range(start='2019-01-01', end='2019-12-31')
         df = pd.DataFrame(columns=['code', 'name'] + [date.strftime('%Y-%m-%d') for date in dates])
 
+
         df[['code', 'name']] = pd.DataFrame(l_name)
+        
+        tem = data[0]
 
         for i, row in enumerate(data):
-            df.iloc[0, i+1] = row
+            df.iloc[0, i+2] = row
+
 
         df = df.astype(str)
         df.replace('nan', '', inplace=True)
+
+        tem = data[0]
+        if tem in df.iloc[0:, 1].values:
+            cur_time = df.columns[df.iloc[1:, 2] == tem].tolist()
+            print(cur_time)
+
         df.to_csv("./result.csv", mode='a',encoding="gbk", index=False, header=not os.path.exists("./result.csv"))
 
     @staticmethod
