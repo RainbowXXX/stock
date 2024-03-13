@@ -11,20 +11,21 @@ class MyAPI:
     
 
     @staticmethod
-    def mana_csv(data: list) -> any:
-        # data.append("0.82")
+    def mana_csv(data: list, stock_index: int, stock: str) -> any:
+        print(stock_index)
         l_name = MyAPI.read_excel('./data.xlsx')
         dates = pd.date_range(start='2019-01-01', end='2019-12-31')
         df = pd.DataFrame(columns=['code', 'name'] + [date.strftime('%Y-%m-%d') for date in dates])
 
-
         df[['code', 'name']] = pd.DataFrame(l_name)
-        
-        # tem = data[0]
-
-        for i, row in enumerate(data):
-            df.iloc[0, i+2] = row
-
+        for row in data:
+            date_str = row[0]
+            values = str(row[1])
+            date_index = df.columns.get_loc(date_str)
+        # for i, row in enumerate(data):
+        #     df.iloc[0, i+2] = row
+        #     print(i)
+            df.iloc[stock_index, date_index] = values
 
         df = df.astype(str)
         df.replace('nan', '', inplace=True)
@@ -45,8 +46,9 @@ class MyAPI:
             cur_time = datetime.strptime(cur_time, '%Y-%m-%d')
             if start_date <= cur_time <= end_date:
             # cur_time = 
+                cur_time = new_data[0]
                 fall = new_data[2]
-                res.append(fall)
+                res.append([cur_time,fall])
         MyAPI.mana_csv(res, index, stock)
 
     @staticmethod
@@ -59,5 +61,5 @@ class MyAPI:
 
 
 if __name__ == "__main__":
-    MyAPI.get_data(["1992-05-07,0.80,0.82,0.82,0.80,1590,3283350.00,5.71,134.29,0.47,1.40", "1993-02-24,1.00,0.98,1.05,0.97,8635,21457976.00,8.00,-2.00,-0.02,7.58"])
+    MyAPI.get_data(["2019-05-07,0.80,0.82,0.82,0.80,1590,3283350.00,5.71,134.29,0.47,1.40", "2019-04-07,1.00,0.98,1.05,0.97,8635,21457976.00,8.00,-2.00,-0.02,7.58"],0,'1')
     # MyAPI.read_excel('./data.xlsx')
