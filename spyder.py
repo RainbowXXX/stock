@@ -30,7 +30,7 @@ class Spyder:
     def Work(self) -> requests.Response:
         return requests.get(url=self.url, headers=self.headers, params=self.param)
 
-    def GetInfo(self, response: requests.Response) -> list[str]:
+    def GetInfo(self, response: requests.Response, name: str) -> tuple[bool, list[str]]:
         response_text = response.text
         callback_name = self.param['cb']
 
@@ -42,15 +42,17 @@ class Spyder:
         
         try:
             response_json = json.loads(response_text)
+            if response_json['data']['name'] != name:
+                return False, []
             response_data = response_json['data']['klines']
 
             ret_data = response_data
         except:
             raise
         
-        return ret_data
+        return True, ret_data
 
-def do_spyder(stock_id: str) -> bool:
+def do_spyder(stock_id: str, name: str) -> bool:
     if stock_id in globalStates['processed_list']:
         return True
     
@@ -65,13 +67,17 @@ def do_spyder(stock_id: str) -> bool:
             spyder.RefreshParam(secid)
             response = spyder.Work()
             globalStates['cur_states']['cur_respons'] = response.text
-            data = spyder.GetInfo(response=response)
+            status, data = spyder.GetInfo(response=response, name=name)
 
-            MyAPI.get_data(data)
-            globalStates['processed_list'].append(stock_id)
+            if status:
+                MyAPI.get_data(data)
+                globalStates['processed_list'].append(stock_id)
 
-            return True
-        except:
+                return True
+            else:
+                continue
+        except BaseException as e:
+            print(e)
             continue
     
     if not is_failed:

@@ -26,7 +26,7 @@ class MyAPI:
         df[['code', 'name']] = pd.DataFrame(l_name)
 
         for i, row in enumerate(data):
-            df.iloc[0, i+1] = row
+            df.iloc[0, i+2] = row
 
         df = df.astype(str)
         df.replace('nan', '', inplace=True)
