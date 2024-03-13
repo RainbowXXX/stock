@@ -6,7 +6,7 @@ from sys import stderr
 from spyder import do_spyder;
 from states import globalStates;
 
-xlsx_file_path = r'D:\Documents\VsCode\Python\project\spyder\stock\data.xlsx'
+xlsx_file_path = r'.\data.xlsx'
 with open(file=xlsx_file_path, mode='rb') as xlsx_file:
     data = pandas.read_excel(xlsx_file, dtype={'code':str,'name':str})
     names = data['name']
@@ -22,7 +22,7 @@ try:
     if __name__ == '__main__':
         len = len(data)
         for i in range(len):
-            if(do_spyder(stock_id= codes[i], name= names[i]) == False):
+            if(do_spyder(i, stock_id= codes[i], name= names[i]) == False):
                 print(f'Fail to work with {codes[i]=}',file=stderr)
 
 except:
