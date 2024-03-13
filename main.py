@@ -22,7 +22,7 @@ try:
     if __name__ == '__main__':
         len = len(data)
         for i in range(len):
-            if(do_spyder(stock_id= codes[i], name= names[i]) == False):
+            if(do_spyder(i, stock_id= codes[i], name= names[i]) == False):
                 print(f'Fail to work with {codes[i]=}',file=stderr)
 
 except:
