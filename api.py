@@ -4,13 +4,6 @@ import pandas as pd
 
 class MyAPI:
 
-    @staticmethod
-    def generate_dates(start_date: datetime, end_date: datetime) -> any:
-
-        current_date = start_date
-        while current_date <= end_date:
-            yield current_date
-            current_date += timedelta(days=1)
 
     @staticmethod
     def is_csv_empty(file_path: str) -> bool:
@@ -19,7 +12,7 @@ class MyAPI:
 
     @staticmethod
     def mana_csv(data: list) -> any:
-        data.append("0.82")
+        # data.append("0.82")
         l_name = MyAPI.read_excel('./data.xlsx')
         dates = pd.date_range(start='2019-01-01', end='2019-12-31')
         df = pd.DataFrame(columns=['code', 'name'] + [date.strftime('%Y-%m-%d') for date in dates])
@@ -30,7 +23,6 @@ class MyAPI:
         tem = data[0]
 
         for i, row in enumerate(data):
-            df.iloc[0, i+2] = row
             df.iloc[0, i+2] = row
 
 
@@ -45,12 +37,18 @@ class MyAPI:
         df.to_csv("./result.csv", mode='a',encoding="gbk", index=False, header=not os.path.exists("./result.csv"))
 
     @staticmethod
-    def get_data(data: list[str]) -> any:
+    def get_data(data: list[str], index: int) -> any:
         res = []
+        start_date = datetime.strptime('2019-1-1', '%Y-%m-%d')
+        end_date = datetime.strptime('2019-12-31', '%Y-%m-%d')
         for row in data:
             new_data = row.split(",")
-            fall = new_data[2]
-            res.append(fall)
+            cur_time = new_data[0]
+            cur_time = datetime.strptime(cur_time, '%Y-%m-%d')
+            if start_date <= cur_time <= end_date:
+            # cur_time = 
+                fall = new_data[2]
+                res.append(fall)
         MyAPI.mana_csv(res)
 
     @staticmethod
