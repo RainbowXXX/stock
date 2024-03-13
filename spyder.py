@@ -51,17 +51,30 @@ class Spyder:
         return ret_data
 
 def do_spyder(stock_id: str) -> bool:
+    if stock_id in globalStates['processed_list']:
+        return True
+    
     spyder = Spyder()
+    is_failed = stock_id in globalStates['fail_list']
     for prefix in {'0.','1.'}:
 
         secid = prefix + stock_id
         globalStates['cur_states']['cur_id'] = secid
 
-        spyder.RefreshParam(secid)
-        response = spyder.Work()
-        globalStates['cur_states']['cur_respons'] = response.text
-        data = spyder.GetInfo(response=response)
+        try:
+            spyder.RefreshParam(secid)
+            response = spyder.Work()
+            globalStates['cur_states']['cur_respons'] = response.text
+            data = spyder.GetInfo(response=response)
 
-        MyAPI.get_data(data)
+            MyAPI.get_data(data)
+            globalStates['processed_list'].append(stock_id)
 
-    return True
+            return True
+        except:
+            continue
+    
+    if not is_failed:
+        globalStates['fail_list'].append(stock_id)
+        
+    return False
