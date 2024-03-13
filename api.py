@@ -22,7 +22,12 @@ class MyAPI:
         l_name = MyAPI.read_excel('./data.xlsx')
         dates = pd.date_range(start='2019-01-01', end='2019-12-31')
         df = pd.DataFrame(columns=['code', 'name'] + [date.strftime('%Y-%m-%d') for date in dates])
+
         df[['code', 'name']] = pd.DataFrame(l_name)
+
+        for i, row in enumerate(data):
+            df.iloc[0, i+1] = row
+
         df = df.astype(str)
         df.replace('nan', '', inplace=True)
         df.to_csv("./result.csv", mode='a',encoding="gbk", index=False, header=not os.path.exists("./result.csv"))
