@@ -23,12 +23,12 @@ class Spyder:
     }
 
     def RefreshParam(self, secid: str) -> dict[str,str]:
-        self.param['secid'] = secid;
-        self.param['_'] = str(int(time.time()*1000));
+        self.param['secid'] = secid
+        self.param['_'] = str(int(time.time()*1000))
         return self.param
     
     def Work(self) -> requests.Response:
-        return requests.get(url=self.url, headers=self.headers, params=self.param);
+        return requests.get(url=self.url, headers=self.headers, params=self.param)
 
     def GetInfo(self, response: requests.Response) -> list[str]:
         response_text = response.text
