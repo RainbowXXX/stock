@@ -71,7 +71,7 @@ def do_spyder(idx: int, stock_id: str, name: str) -> bool:
             status, data = spyder.GetInfo(response=response, name=name)
 
             if status:
-                MyAPI.get_data(data, idx, stock_id)
+                MyAPI.get_data(data, idx)
                 globalStates['processed_list'].append(stock_id)
 
                 return True

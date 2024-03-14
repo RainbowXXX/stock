@@ -25,7 +25,7 @@ try:
             if(do_spyder(i, stock_id= codes[i], name= names[i]) == False):
                 print(f'Fail to work with {codes[i]=}',file=stderr)
 
-except:
+finally:
     with open(dump_file_path, 'wb') as dump_file:
         pickle.dump(globalStates, dump_file)
     
