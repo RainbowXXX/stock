@@ -42,7 +42,8 @@ class Spyder:
         
         try:
             response_json = json.loads(response_text)
-            if response_json['data']['name'] != name:
+            tmp = str(response_json['data']['name']).replace(' ','')
+            if tmp != name:
                 return False, []
             response_data = response_json['data']['klines']
 
