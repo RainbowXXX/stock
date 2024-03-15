@@ -78,7 +78,7 @@ def do_spyder(idx: int, stock_id: str, name: str) -> bool:
             else:
                 continue
         except BaseException as e:
-            print(e)
+            # print(e)
             continue
     
     if not is_failed:
