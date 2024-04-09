@@ -7,7 +7,7 @@ from states import globalStates;
 class Spyder:
     url = 'https://push2his.eastmoney.com/api/qt/stock/kline/get'
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+        'User-Agent': 'xxx'  #隐私 不方便泄露
     }
     param : dict[str,str] = {
         'cb': 'jQuery35107966420494187909_1710204122023',
